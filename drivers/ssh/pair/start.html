@@ -1,0 +1,94 @@
+<script>
+Homey.setTitle( __('pair.start.title') );
+Homey.on('error', function( errortype, callback ){
+	if (errortype == 'error') {
+		Homey.alert(__('pair.start.error'), 'error');
+		Homey.done();
+	}
+	if (errortype == 'nosettings') {
+		Homey.alert(__('pair.start.nosettings'), 'error');
+		Homey.done();
+	}
+});
+
+Homey.on('continue', function( success, callback ){
+	Homey.showView('list_devices');
+});
+
+function saveSettings () {
+	// variables
+	var inputServerName = document.getElementById( 'servername' ).value.trim();
+	var inputHostname = document.getElementById( 'hostname' ).value.trim();
+	var inputUsername = document.getElementById( 'username' ).value.trim();
+	var inputPassword = document.getElementById( 'password' ).value.trim();
+	var inputPort = document.getElementById( 'port' ).value.trim();
+
+	// Give error, required values
+	if (inputHostname.length === 0 || inputHostname === 'localhost' || inputHostname === '127.0.0.1') {
+		Homey.alert(__('pair.start.required.hostname'), 'error');
+	} else if( inputUsername.length === 0) {
+		Homey.alert(__('pair.start.required.username'), 'error');
+	} else if( inputPassword.length === 0) {
+		Homey.alert(__('pair.start.required.password'), 'error');
+	} else if( inputPort.length === 0 || isNaN(inputPort)) {
+		Homey.alert(__('pair.start.required.port'), 'error');
+	} else {
+		// Build data array
+		var data = {
+			hostname: inputHostname,
+			username: inputUsername,
+			password: inputPassword,
+			serverName: inputServerName,
+			port: inputPort
+		};
+
+		// Continue to back-end, pass along data
+		Homey.emit( 'get_devices', data );
+	}
+}
+
+</script>
+
+    <p data-i18n="pair.start.intro"></p>
+		<style>
+			.pairSettings {
+				font-size:16px;
+				border:none;
+			}
+
+			input {
+				font-size:16px;
+				border: 1px solid #ccc;
+			}
+		</style>
+
+		<table class="pairSettings">
+			<tr>
+				<td style="width:150px;" data-i18n="pair.start.serverName"></td>
+				<td><input id="servername" type="text" value="" placeholder="srv1" /></td>
+			</tr>
+			<tr>
+				<td style="width:150px;" data-i18n="pair.start.hostname"></td>
+				<td><input id="hostname" type="text" value="" placeholder="192.168.1.1" /></td>
+			</tr>
+			<tr>
+				<td style="width:150px;" data-i18n="pair.start.port"></td>
+				<td><input id="port" type="text" value="22" placeholder="22" /></td>
+			</tr>
+			<tr>
+				<td style="width:150px;" data-i18n="pair.start.username"></td>
+				<td><input id="username" type="text" value="" placeholder="root" /></td>
+			</tr>
+			<tr>
+				<td style="width:150px;" data-i18n="pair.start.password"></td>
+				<td><input id="password" type="password" value="" /></td>
+			</tr>
+		</table>
+
+		<p>
+		&nbsp;
+	  </p>
+
+<fieldset>
+    <button class="button" data-i18n="pair.start.saveSettings" onclick="saveSettings()"></button>
+</fieldset>

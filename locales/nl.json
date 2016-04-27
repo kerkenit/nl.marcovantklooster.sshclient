@@ -1,0 +1,21 @@
+{
+	"pair": {
+		"start": {
+			"intro": "Voer de server inloggegevens in",
+			"title": "Aparaat zoeken...",
+			"error": "Er is een fout opgetreden",
+			"required": {
+				"hostname": "Hostname is verplicht",
+				"username": "Gebruikersnaam is verplicht",
+				"password": "Wachtwoord is verplicht",
+				"port": "Poort is verplicht"
+			},
+			"serverName": "Server naam",
+			"hostname": "Hostnaam <sup>*</sup>",
+			"port": "Poort <sup>*</sup>",
+			"username": "Gebruikersnaam <sup>*</sup>",
+			"password": "Wachtwoord <sup>*</sup>",
+			"saveSettings": "Instellingen opslaan"
+		}
+	}
+}

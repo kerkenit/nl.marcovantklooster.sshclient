@@ -1,0 +1,21 @@
+{
+	"pair": {
+		"start": {
+			"intro": "Enter your server credentials.",
+			"title": "Finding device...",
+			"error": "An error has occurred.",
+			"required": {
+				"hostname": "Hostname is required",
+				"username": "Username is required",
+				"password": "Password is required",
+				"port": "Port is required"
+			},
+			"serverName": "Servername",
+			"hostname": "Hostname <sup>*</sup>",
+			"port": "Port <sup>*</sup>",
+			"username": "Username <sup>*</sup>",
+			"password": "Password <sup>*</sup>",
+			"saveSettings": "Save settings"
+		}
+	}
+}

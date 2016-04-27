@@ -1,0 +1,72 @@
+{
+    "id": "nl.marcovantklooster.sshclient",
+    "name": {
+        "en": "SSH Client",
+        "nl": "SSH Client"
+    },
+    "version": "0.0.1",
+    "compatibility": "0.x || 1.x",
+    "author": {
+		"name": "Marco van 't Klooster",
+		"email": "info@marcovantklooster.nl",
+		"website": "http://www.marcovantklooster.nl"
+	},
+	"images": {
+		"large": "./assets/images/large.jpg",
+		"small": "./assets/images/small.jpg"
+	},
+	"category": "internet",
+	"description": {
+		"en": "Make a SSH connect to a remote server",
+		"nl": "Maak een SSH verbinding met een externe computer"
+	},
+	"drivers": [{
+		"id": "ssh",
+		"name": {
+			"en": "SSH Server",
+			"nl": "SSH Server"
+		},
+		"images": {
+			"large": "drivers/ssh/assets/images/large.jpg",
+			"small": "drivers/ssh/assets/images/small.jpg"
+		},
+		"class": "other",
+		"capabilities": [""],
+		"pair": [{
+			"id": "start"
+		}, {
+			"id": "list_devices",
+			"template": "list_devices",
+			"navigation": {
+				"next": "add_ssh"
+			}
+		}, {
+			"id": "add_ssh",
+			"template": "add_devices"
+		}]
+	}],
+	"flow": {
+		"actions": [{
+			"id": "command",
+			"title": {
+				"en": "SSH command",
+				"nl": "SSH commando"
+			},
+			"args": [{
+				"name": "device",
+				"type": "device",
+				"placeholder": {
+					"en": "Select SSH client",
+					"nl": "Selecteer SSH client"
+				}
+			}, {
+				"name": "command",
+				"type": "text",
+				"placeholder": {
+					"en": "Command to execute",
+					"nl": "Uit te voeren commando"
+				}
+			}]
+		}]
+	}
+}
