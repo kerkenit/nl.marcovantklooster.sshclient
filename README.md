@@ -11,7 +11,7 @@ In the flow manager you can select the server, and send the command.
 # Usefull?
 
 * Create a backup of your server through Homey
-* Useful to start a playlist from Spotify on your Mac.
+* Useful to start a playlist from [Spotify](https://github.com/dronir/SpotifyControl) on your Mac.
 
 #Remarks
 
