@@ -4,7 +4,7 @@
         "en": "SSH Client",
         "nl": "SSH Client"
     },
-    "version": "0.0.1",
+    "version": "0.0.2",
     "compatibility": "0.x || 1.x",
     "author": {
 		"name": "Marco van 't Klooster",
