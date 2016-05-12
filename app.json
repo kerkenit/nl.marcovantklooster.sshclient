@@ -15,7 +15,7 @@
 		"large": "./assets/images/large.jpg",
 		"small": "./assets/images/small.jpg"
 	},
-	"category": "internet",
+	"category": "tools",
 	"description": {
 		"en": "Make a SSH connect to a remote server",
 		"nl": "Maak een SSH verbinding met een externe computer"
