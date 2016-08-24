@@ -4,6 +4,7 @@
 			"intro": "Voer de server inloggegevens in",
 			"title": "Aparaat zoeken...",
 			"error": "Er is een fout opgetreden",
+            "connectionError":"Een verbinding met de server niet kon worden vastgesteld",
 			"required": {
 				"hostname": "Hostname is verplicht",
 				"username": "Gebruikersnaam is verplicht",

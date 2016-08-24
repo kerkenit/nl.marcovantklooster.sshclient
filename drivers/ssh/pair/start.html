@@ -16,34 +16,46 @@ Homey.on('continue', function( success, callback ){
 });
 
 function saveSettings () {
-	// variables
-	var inputServerName = document.getElementById( 'servername' ).value.trim();
-	var inputHostname = document.getElementById( 'hostname' ).value.trim();
-	var inputUsername = document.getElementById( 'username' ).value.trim();
-	var inputPassword = document.getElementById( 'password' ).value.trim();
-	var inputPort = document.getElementById( 'port' ).value.trim();
+	$('.ssh-err-msg').text('');
+	var device = {
+		data: {
+			id: $('#hostname').val().trim()
+		},
+		name: $('#servername').val().trim(),
+		settings: {
+			hostname: $('#hostname').val().trim(),
+			username: $('#username').val(),
+			password: $('#password').val(),
+			serverName: $('#servername').val().trim(),
+			port: parseInt($('#port').val().trim(), 10)
+		}
+	};
 
 	// Give error, required values
-	if (inputHostname.length === 0 || inputHostname === 'localhost' || inputHostname === '127.0.0.1') {
+	if (device.settings.hostname.length === 0 || device.settings.hostname === 'localhost' || device.settings.hostname === '127.0.0.1') {
 		Homey.alert(__('pair.start.required.hostname'), 'error');
-	} else if( inputUsername.length === 0) {
+	} else if( device.settings.username.length === 0) {
 		Homey.alert(__('pair.start.required.username'), 'error');
-	} else if( inputPassword.length === 0) {
+	} else if( device.settings.password.length === 0) {
 		Homey.alert(__('pair.start.required.password'), 'error');
-	} else if( inputPort.length === 0 || isNaN(inputPort)) {
+	} else if( device.settings.port.length === 0 || isNaN(device.settings.port)) {
 		Homey.alert(__('pair.start.required.port'), 'error');
 	} else {
-		// Build data array
-		var data = {
-			hostname: inputHostname,
-			username: inputUsername,
-			password: inputPassword,
-			serverName: inputServerName,
-			port: inputPort
-		};
+		console.log('device', device);
 
-		// Continue to back-end, pass along data
-		Homey.emit( 'get_devices', data );
+		Homey.emit( 'list_devices', device, function ( err, result ) {
+			if(err !== null) {
+				$('.ssh-err-msg').text(err);
+			} else {
+				//Successfully connected
+				Homey.addDevice(device, function( err, result ){
+					if( err ) return console.error(err);
+					console.log( result);
+				});
+				//Done pairing
+				Homey.done();
+			}
+		} );
 	}
 }
 
@@ -73,7 +85,7 @@ function saveSettings () {
 			</tr>
 			<tr>
 				<td style="width:150px;" data-i18n="pair.start.port"></td>
-				<td><input id="port" type="text" value="22" placeholder="22" /></td>
+				<td><input id="port" type="number" min="1" max="65535" value="22" placeholder="22" /></td>
 			</tr>
 			<tr>
 				<td style="width:150px;" data-i18n="pair.start.username"></td>
@@ -81,7 +93,7 @@ function saveSettings () {
 			</tr>
 			<tr>
 				<td style="width:150px;" data-i18n="pair.start.password"></td>
-				<td><input id="password" type="password" value="" /></td>
+				<td><input id="password" type="password" value="" placeholder="" /></td>
 			</tr>
 		</table>
 
@@ -92,3 +104,4 @@ function saveSettings () {
 <fieldset>
     <button class="button" data-i18n="pair.start.saveSettings" onclick="saveSettings()"></button>
 </fieldset>
+<p class="ssh-err-msg" style="color: #ff6300;"></p>

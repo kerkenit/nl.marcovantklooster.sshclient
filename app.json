@@ -4,7 +4,7 @@
         "en": "SSH Client",
         "nl": "SSH Client"
     },
-    "version": "0.0.2",
+    "version": "0.1.0",
     "compatibility": "0.x || 1.x",
     "author": {
 		"name": "Marco van 't Klooster",
@@ -31,19 +31,73 @@
 			"small": "drivers/ssh/assets/images/small.jpg"
 		},
 		"class": "other",
-		"capabilities": [""],
+		"capabilities": [ ],
 		"pair": [{
 			"id": "start"
 		}, {
 			"id": "list_devices",
-			"template": "list_devices",
-			"navigation": {
-				"next": "add_ssh"
-			}
-		}, {
-			"id": "add_ssh",
-			"template": "add_devices"
-		}]
+			"template": "list_devices"
+		}],
+		"settings": [
+            {
+                "type": "group",
+                "label": {
+                    "en": "Server settings",
+                    "nl": "Server instellingen"
+                },
+                "children": [
+                    {
+                        "id": "serverName",
+                        "type": "text",
+                        "label": {
+                            "en": "Servername",
+							"nl": "Server naam"
+                        },
+                        "value": ""
+                    },
+                    {
+                        "id": "hostname",
+                        "type": "text",
+                        "label": {
+                            "en": "Hostname",
+							"nl": "Hostnaam"
+						},
+                        "value": ""
+                    },
+                    {
+                        "id": "port",
+                        "type": "number",
+                        "label": {
+                            "en": "Port",
+							"nl": "Poort"
+                        },
+                        "value": 22,
+                        "attr": {
+                            "min": 1,
+                            "max": 65535
+                        }
+                    },
+                    {
+                        "id": "username",
+                        "type": "text",
+                        "label": {
+                            "en": "Username",
+							"nl": "Gebruikersnaam"
+						},
+                        "value": ""
+                    },
+                    {
+                        "id": "password",
+                        "type": "password",
+                        "label": {
+                            "en": "Password",
+							"nl": "Wachtwoord"
+						},
+                        "value": ""
+                    }
+                ]
+            }
+         ]
 	}],
 	"flow": {
 		"actions": [{
