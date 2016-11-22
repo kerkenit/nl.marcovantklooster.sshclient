@@ -19,7 +19,7 @@ function saveSettings () {
 	$('.ssh-err-msg').text('');
 	var device = {
 		data: {
-			id: $('#hostname').val().trim()
+			id: 'ssh_' + $('#servername').val().trim() + '_' + $('#hostname').val().trim()
 		},
 		name: $('#servername').val().trim(),
 		settings: {
@@ -42,14 +42,15 @@ function saveSettings () {
 		Homey.alert(__('pair.start.required.port'), 'error');
 	} else {
 		console.log('device', device);
-
 		Homey.emit( 'list_devices', device, function ( err, result ) {
+			console.log(err);
+			console.log(result);
 			if(err !== null) {
 				$('.ssh-err-msg').text(err);
 			} else {
 				//Successfully connected
 				Homey.addDevice(device, function( err, result ){
-					if( err ) return console.error(err);
+					if( err ) return Homey.error(err);
 					console.log( result);
 				});
 				//Done pairing

@@ -4,12 +4,12 @@
         "en": "SSH Client",
         "nl": "SSH Client"
     },
-    "version": "0.1.0",
+    "version": "0.1.1",
     "compatibility": "0.x || 1.x",
     "author": {
-		"name": "Marco van 't Klooster",
-		"email": "info@marcovantklooster.nl",
-		"website": "http://www.marcovantklooster.nl"
+		"name": "Kerk en IT",
+		"email": "info@kerkenit.nl",
+		"website": "http://www.kerkenit.nl"
 	},
 	"images": {
 		"large": "./assets/images/large.jpg",
