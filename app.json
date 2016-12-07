@@ -4,7 +4,7 @@
         "en": "SSH Client",
         "nl": "SSH Client"
     },
-    "version": "0.1.1",
+    "version": "0.1.2",
     "compatibility": "0.x || 1.x",
     "author": {
 		"name": "Kerk en IT",

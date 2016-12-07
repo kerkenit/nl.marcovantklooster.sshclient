@@ -4,7 +4,6 @@
 			"intro": "Enter your server credentials.",
 			"title": "Finding device...",
 			"error": "An error has occurred.",
-            "connectionError":"A connection with the server could not be established",
 			"required": {
 				"hostname": "Hostname is required",
 				"username": "Username is required",
