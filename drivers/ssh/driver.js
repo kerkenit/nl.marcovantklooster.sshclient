@@ -51,7 +51,7 @@ module.exports.pair = function(socket) {
 };
 // flow action handlers
 Homey.manager('flow').on('action.command', function(callback, args) {
-	console.log("SSH Client - sending " + args.command + "\n to " + rgs.device.id);
+	console.log("SSH Client - sending " + args.command + "\n to " + args.device.id);
 	module.exports.getSettings(args.device, function(err, settings) {
 		Homey.log(settings);
 		var Client = require('ssh2').Client;
