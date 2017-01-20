@@ -8,7 +8,7 @@ module.exports.pair = function(socket) {
 	// this method is run when Homey.emit('list_devices') is run on the front-end
 	// which happens when you use the template `list_devices`
 	socket.on('list_devices', function(data, callback) {
-		console.log("SSH Client - list_devices tempHostName is", tempHostName);
+		Homey.log("SSH Client - list_devices tempHostName is", tempHostName);
 		var devices = [{
 			data: {
 				id: tempHostName,
@@ -45,7 +45,7 @@ module.exports.pair = function(socket) {
 		} else {
 			tempServerName = data.serverName;
 		}
-		console.log("SSH Client - got get_devices from front-end, tempHostName =", tempHostName);
+		Homey.log("SSH Client - got get_devices from front-end, tempHostName =", tempHostName);
 		callback(null, devices);
 	});
 };
@@ -53,29 +53,33 @@ module.exports.pair = function(socket) {
 Homey.manager('flow').on('action.command', function(callback, args) {
 	console.log("SSH Client - sending " + args.command + "\n to " + args.device.id);
 	module.exports.getSettings(args.device, function(err, settings) {
+		if (err) {
+			Homey.log(err);
+		}
 		Homey.log(settings);
 		var Client = require('ssh2').Client;
 		var conn = new Client();
 		conn.on('ready', function() {
 			conn.exec(args.command, function(err, stream) {
 				if (err) {
-					console.log(err);
+					Homey.log(err);
 					callback(null, false);
-				};
+				}
 				stream.on('close', function(code, signal) {
 					conn.end();
+					Homey.log("stream close");
 					callback(null, true);
 				}).on('data', function(data) {
-					console.log('STDOUT: ' + data);
+					Homey.log('STDOUT: ' + data);
 					callback(null, true);// we've fired successfully
 				}).stderr.on('data', function(data) {
-					console.log('STDERR: ' + data);
+					Homey.log('STDERR: ' + data);
 					callback(null, false);
 				});
 			});
 		}).on('keyboard-interactive', function(name, instr, lang, prompts, cb) {
 			cb([settings.password]);
-		}).connect({
+    	}).connect({
 			host: settings.hostname,
 			port: settings.port,
 			tryKeyboard: true,
