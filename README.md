@@ -17,8 +17,3 @@ In the flow manager you can select the server, and send the command.
 
 * This won't work with certificates. Only username and password is allowed.
 * You can't create an connection to the Homey, because SSH access to the Homey is secured by Athom
-
-## Like it?
-
-Do you want to support me to continue development?
-[![PayPal](https://www.paypalobjects.com/webstatic/en_US/i/btn/png/blue-pill-paypal-34px.png)](http://PayPal.Me/KerkEnIT)
