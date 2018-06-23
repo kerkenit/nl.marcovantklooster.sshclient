@@ -1,13 +1,13 @@
-var tempServerName = '',
-	tempHostName = '',
-	tempUsername = '',
-	tempPassword = '',
+var tempServerName = "",
+	tempHostName = "",
+	tempUsername = "",
+	tempPassword = "",
 	tempPort = 22;
 module.exports.pair = function(socket) {
 	// socket is a direct channel to the front-end
-	// this method is run when Homey.emit('list_devices') is run on the front-end
+	// this method is run when Homey.emit("list_devices") is run on the front-end
 	// which happens when you use the template `list_devices`
-	socket.on('list_devices', function(data, callback) {
+	socket.on("list_devices", function(data, callback) {
 		Homey.log("SSH Client - list_devices tempHostName is", tempHostName);
 		var devices = [{
 			data: {
@@ -22,7 +22,7 @@ module.exports.pair = function(socket) {
 		callback(null, devices);
 	});
 	// this is called when the user presses save settings button in start.html
-	socket.on('get_devices', function(data, callback) {
+	socket.on("get_devices", function(data, callback) {
 		// Set passed pair settings in variables
 		tempHostName = data.hostname;
 		tempUsername = data.username;
@@ -58,35 +58,35 @@ module.exports.init = function(devices_data, callback) {
 	callback();
 };
 // flow action handlers
-Homey.manager('flow').on('action.command', function(callback, args) {
+Homey.manager("flow").on("action.command", function(callback, args) {
 	console.log("SSH Client - sending " + args.command + "\n to " + args.device.id);
 	module.exports.getSettings(args.device, function(err, settings) {
 		if (err) {
 			Homey.log(err);
 		}
-		var Client = require('ssh2').Client;
+		var Client = require("ssh2").Client;
 		var conn = new Client();
-		conn.on('ready', function() {
+		conn.on("ready", function() {
 			conn.exec(args.command, function(err, stream) {
 				if (err) {
 					Homey.log(err);
 					callback(null, false);
 				}
-				stream.on('close', function(code, signal) {
+				stream.on("close", function(code, signal) {
 					conn.end();
 					Homey.log("stream close");
 					callback(null, true);
-				}).on('data', function(data) {
-					Homey.log('STDOUT: ' + data);
+				}).on("data", function(data) {
+					Homey.log("STDOUT: " + data);
 					callback(null, true);// we've fired successfully
-				}).stderr.on('data', function(data) {
-					Homey.log('STDERR: ' + data);
+				}).stderr.on("data", function(data) {
+					Homey.log("STDERR: " + data);
 					callback(null, false);
 				});
 			});
-		}).on('keyboard-interactive', function(name, instr, lang, prompts, cb) {
+		}).on("keyboard-interactive", function(name, instr, lang, prompts, cb) {
 			cb([settings.password]);
-    	}).on('error', function(err) {
+    	}).on("error", function(err) {
 			module.exports.setUnavailable(args.device, "Error: " + JSON.stringify(err));
 			Homey.log(err);
 		}).connect({
