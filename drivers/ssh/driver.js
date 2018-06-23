@@ -49,6 +49,14 @@ module.exports.pair = function(socket) {
 		callback(null, devices);
 	});
 };
+
+// the `init` method is called when your driver is loaded for the first time
+module.exports.init = function(devices_data, callback) {
+	devices_data.forEach(function(device) {
+		module.exports.setAvailable(device);
+	});
+	callback();
+};
 // flow action handlers
 Homey.manager('flow').on('action.command', function(callback, args) {
 	console.log("SSH Client - sending " + args.command + "\n to " + args.device.id);
@@ -56,7 +64,6 @@ Homey.manager('flow').on('action.command', function(callback, args) {
 		if (err) {
 			Homey.log(err);
 		}
-		Homey.log(settings);
 		var Client = require('ssh2').Client;
 		var conn = new Client();
 		conn.on('ready', function() {
@@ -79,7 +86,10 @@ Homey.manager('flow').on('action.command', function(callback, args) {
 			});
 		}).on('keyboard-interactive', function(name, instr, lang, prompts, cb) {
 			cb([settings.password]);
-    	}).connect({
+    	}).on('error', function(err) {
+			module.exports.setUnavailable(args.device, "Error: " + JSON.stringify(err));
+			Homey.log(err);
+		}).connect({
 			host: settings.hostname,
 			port: settings.port,
 			tryKeyboard: true,

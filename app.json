@@ -4,7 +4,7 @@
         "en": "SSH Client",
         "nl": "SSH Client"
     },
-    "version": "0.1.3",
+    "version": "0.1.4",
     "compatibility": "0.x || 1.x",
     "author": {
 		"name": "Kerk en IT",
@@ -25,7 +25,7 @@
         }
 	},
     "athomForumDiscussionId": 1490,
-     "bugs": {
+    "bugs": {
         "url": "https://github.com/kerkenit/nl.marcovantklooster.sshclient/issues"
     },
 	"images": {
