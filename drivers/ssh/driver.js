@@ -86,7 +86,7 @@ Homey.manager("flow").on("action.command", function(callback, args) {
 			});
 		}).on("keyboard-interactive", function(name, instr, lang, prompts, cb) {
 			cb([settings.password]);
-    	}).on("error", function(err) {
+		}).on("error", function(err) {
 			module.exports.setUnavailable(args.device, "Error: " + JSON.stringify(err));
 			Homey.log(err);
 		}).connect({
