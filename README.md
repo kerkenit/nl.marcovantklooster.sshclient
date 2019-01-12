@@ -20,6 +20,10 @@ In the flow manager you can select the server, and send the command.
 
 ## Changelog
 
+### 0.2.0
+
+Upped compatibility for 2.0.
+
 ### 0.1.4
 
 * Fixed issue to prevent crash of app. Right now the device is set to offline mode.
