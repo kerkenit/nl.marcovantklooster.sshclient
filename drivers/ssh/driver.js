@@ -1,3 +1,7 @@
+(function() {
+	'use strict';
+}());
+
 var tempServerName = "",
 	tempHostName = "",
 	tempUsername = "",
@@ -51,15 +55,15 @@ module.exports.pair = function(socket) {
 };
 
 // the `init` method is called when your driver is loaded for the first time
-module.exports.init = function(devices_data, callback) {
-	devices_data.forEach(function(device) {
+module.exports.init = function(devicesData, callback) {
+	devicesData.forEach(function(device) {
 		module.exports.setAvailable(device);
 	});
 	callback();
 };
 // flow action handlers
 Homey.manager("flow").on("action.command", function(callback, args) {
-	console.log("SSH Client - sending " + args.command + "\n to " + args.device.id);
+	Homey.log("SSH Client - sending " + args.command + "\n to " + args.device.id);
 	module.exports.getSettings(args.device, function(err, settings) {
 		if (err) {
 			Homey.log(err);
