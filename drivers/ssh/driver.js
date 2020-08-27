@@ -1,104 +1,69 @@
-(function() {
-	'use strict';
-}());
+'use strict';
 
-var tempServerName = "",
-	tempHostName = "",
-	tempUsername = "",
-	tempPassword = "",
-	tempPort = 22;
-module.exports.pair = function(socket) {
-	// socket is a direct channel to the front-end
-	// this method is run when Homey.emit("list_devices") is run on the front-end
-	// which happens when you use the template `list_devices`
-	socket.on("list_devices", function(data, callback) {
-		Homey.log("SSH Client - list_devices tempHostName is", tempHostName);
-		var devices = [{
-			data: {
-				id: tempHostName,
-				hostname: tempHostName,
-				username: tempUsername,
-				password: tempPassword,
-				port: parseInt(tempPort, 10)
-			},
-			name: tempServerName
-		}];
-		callback(null, devices);
-	});
-	// this is called when the user presses save settings button in start.html
-	socket.on("get_devices", function(data, callback) {
-		// Set passed pair settings in variables
-		tempHostName = data.hostname;
-		tempUsername = data.username;
-		tempPassword = data.password;
-		tempPort = data.port;
+const Homey = require('homey');
 
-		var devices = [{
-			data: {
-				id: tempHostName,
-				hostname: tempHostName,
-				username: tempUsername,
-				password: tempPassword,
-				port: parseInt(tempPort, 10)
-			},
-			name: tempServerName
-		}];
+let tempServerName = '';
+let tempHostName = '';
+let tempUsername = '';
+let tempPassword = '';
+let tempPrivateKey = null;
+let tempPassphrase = null;
+let tempPort = 22;
 
-		if (data.serverName === undefined || data.serverName === null || data.serverName.length === 0) {
-			tempServerName = tempHostName;
-		} else {
-			tempServerName = data.serverName;
-		}
-		Homey.log("SSH Client - got get_devices from front-end, tempHostName =", tempHostName);
-		callback(null, devices);
-	});
+module.exports = class sshDriver extends Homey.Driver {
+
+  onPair(socket) {
+    // socket is a direct channel to the front-end
+    // this method is run when Homey.emit("list_devices") is run on the front-end
+    // which happens when you use the template `list_devices`
+    socket.on('list_devices', (data, callback) => {
+      this.log(`SSH Client - list_devices tempHostName is: ${tempHostName}`);
+      const devices = [{
+        data: {
+          id: tempHostName,
+          hostname: tempHostName,
+          username: tempUsername,
+          password: tempPassword,
+          privateKey: tempPrivateKey,
+          passphrase: tempPassphrase,
+          port: parseInt(tempPort, 10),
+        },
+        name: tempServerName,
+      }];
+      callback(null, devices);
+    });
+    // this is called when the user presses save settings button in start.html
+    socket.on('get_devices', function(data, callback) {
+      // Set passed pair settings in variables
+      tempHostName = data.hostname;
+      tempUsername = data.username;
+      tempPassword = data.password;
+      tempPrivateKey = data.privateKey;
+      tempPassphrase = data.passphrase;
+      tempPort = data.port;
+
+      const devices = [{
+        data: {
+          id: tempHostName,
+          hostname: tempHostName,
+          username: tempUsername,
+          password: tempPassword,
+          privateKey: tempPrivateKey,
+          passphrase: tempPassphrase,
+          port: parseInt(tempPort, 10),
+        },
+        name: tempServerName,
+      }];
+
+      if (data.serverName === undefined || data.serverName === null
+        || data.serverName.length === 0) {
+        tempServerName = tempHostName;
+      } else {
+        tempServerName = data.serverName;
+      }
+      this.log('SSH Client - got get_devices from front-end, tempHostName =', tempHostName);
+      callback(null, devices);
+    });
+  }
+
 };
-
-// the `init` method is called when your driver is loaded for the first time
-module.exports.init = function(devicesData, callback) {
-	devicesData.forEach(function(device) {
-		module.exports.setAvailable(device);
-	});
-	callback();
-};
-// flow action handlers
-Homey.manager("flow").on("action.command", function(callback, args) {
-	Homey.log("SSH Client - sending " + args.command + "\n to " + args.device.id);
-	module.exports.getSettings(args.device, function(err, settings) {
-		if (err) {
-			Homey.log(err);
-		}
-		var Client = require("ssh2").Client;
-		var conn = new Client();
-		conn.on("ready", function() {
-			conn.exec(args.command, function(err, stream) {
-				if (err) {
-					Homey.log(err);
-					callback(null, false);
-				}
-				stream.on("close", function(code, signal) {
-					conn.end();
-					Homey.log("stream close");
-					callback(null, true);
-				}).on("data", function(data) {
-					Homey.log("STDOUT: " + data);
-					callback(null, true);// we've fired successfully
-				}).stderr.on("data", function(data) {
-					Homey.log("STDERR: " + data);
-					callback(null, false);
-				});
-			});
-		}).on("keyboard-interactive", function(name, instr, lang, prompts, cb) {
-			cb([settings.password]);
-		}).on("error", function(err) {
-			module.exports.setUnavailable(args.device, "Error: " + JSON.stringify(err));
-			Homey.log(err);
-		}).connect({
-			host: settings.hostname,
-			port: settings.port,
-			tryKeyboard: true,
-			username: settings.username,
-			password: settings.password
-		});
-	});
-});

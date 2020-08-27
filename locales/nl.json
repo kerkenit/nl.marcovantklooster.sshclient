@@ -7,7 +7,7 @@
 			"required": {
 				"hostname": "Hostname is verplicht",
 				"username": "Gebruikersnaam is verplicht",
-				"password": "Wachtwoord is verplicht",
+				"password": "Wachtwoord is verplicht wanneer geen private sleutel is opgegeven",
 				"port": "Poort is verplicht"
 			},
 			"serverName": "Server naam",
@@ -15,7 +15,9 @@
 			"port": "Poort <sup>*</sup>",
 			"username": "Gebruikersnaam <sup>*</sup>",
 			"password": "Wachtwoord <sup>*</sup>",
-			"saveSettings": "Instellingen opslaan"
+			"saveSettings": "Instellingen opslaan",
+			"privateKey": "Private sleutel",
+			"passphrase": "Wachtwoordzin"
 		}
 	}
 }

@@ -7,7 +7,7 @@
 			"required": {
 				"hostname": "Hostname is required",
 				"username": "Username is required",
-				"password": "Password is required",
+				"password": "Password is required when no private key is entered",
 				"port": "Port is required"
 			},
 			"serverName": "Servername",
@@ -15,7 +15,9 @@
 			"port": "Port <sup>*</sup>",
 			"username": "Username <sup>*</sup>",
 			"password": "Password <sup>*</sup>",
-			"saveSettings": "Save settings"
+			"saveSettings": "Save settings",
+			"privateKey": "Private key",
+			"passphrase": "Passphrase"
 		}
 	}
 }

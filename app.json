@@ -1,143 +1,322 @@
 {
-    "id": "nl.marcovantklooster.sshclient",
-    "name": {
-        "en": "SSH Client",
-        "nl": "SSH Client"
-    },
-    "version": "0.2.0",
-    "compatibility": ">=1.5.0",
-    "author": {
-		"name": "Kerk en IT",
-		"email": "info@kerkenit.nl",
-		"website": "https://www.kerkenit.nl"
-	},
-	"contributors": {
-		"developers": [{
-			"name": "Marco van 't Klooster",
-			"email": "info@marcovantklooster.nl"
-		}]
-	},
-	"contributing": {
-        "donate": {
-            "paypal": {
-                "username": "kerkenit"
-            }
+  "id": "nl.marcovantklooster.sshclient",
+  "sdk": 2,
+  "name": {
+    "en": "SSH Client",
+    "nl": "SSH Client"
+  },
+  "version": "0.3.0",
+  "compatibility": ">=1.5.0",
+  "author": {
+    "name": "Kerk en IT",
+    "email": "info@kerkenit.nl",
+    "website": "https://www.kerkenit.nl"
+  },
+  "contributors": {
+    "developers": [
+      {
+        "name": "Marco van 't Klooster",
+        "email": "info@marcovantklooster.nl"
+      }
+    ]
+  },
+  "contributing": {
+    "donate": {
+      "paypal": {
+        "username": "kerkenit"
+      }
+    }
+  },
+  "athomForumDiscussionId": 1490,
+  "bugs": {
+    "url": "https://github.com/kerkenit/nl.marcovantklooster.sshclient/issues"
+  },
+  "images": {
+    "large": "./assets/images/large.jpg",
+    "small": "./assets/images/small.jpg"
+  },
+  "category": "tools",
+  "description": {
+    "en": "Make a SSH connect to a remote server",
+    "nl": "Maak een SSH verbinding met een externe computer"
+  },
+  "drivers": [
+    {
+      "id": "ssh",
+      "name": {
+        "en": "SSH Server",
+        "nl": "SSH Server"
+      },
+      "images": {
+        "large": "drivers/ssh/assets/images/large.jpg",
+        "small": "drivers/ssh/assets/images/small.jpg"
+      },
+      "class": "other",
+      "capabilities": [],
+      "pair": [
+        {
+          "id": "start"
+        },
+        {
+          "id": "list_devices",
+          "template": "list_devices"
         }
-	},
-    "athomForumDiscussionId": 1490,
-    "bugs": {
-        "url": "https://github.com/kerkenit/nl.marcovantklooster.sshclient/issues"
-    },
-	"images": {
-		"large": "./assets/images/large.jpg",
-		"small": "./assets/images/small.jpg"
-	},
-	"category": "tools",
-	"description": {
-		"en": "Make a SSH connect to a remote server",
-		"nl": "Maak een SSH verbinding met een externe computer"
-	},
-	"drivers": [{
-		"id": "ssh",
-		"name": {
-			"en": "SSH Server",
-			"nl": "SSH Server"
-		},
-		"images": {
-			"large": "drivers/ssh/assets/images/large.jpg",
-			"small": "drivers/ssh/assets/images/small.jpg"
-		},
-		"class": "other",
-		"capabilities": [ ],
-		"pair": [{
-			"id": "start"
-		}, {
-			"id": "list_devices",
-			"template": "list_devices"
-		}],
-		"settings": [
+      ],
+      "settings": [
+        {
+          "type": "group",
+          "label": {
+            "en": "Server settings",
+            "nl": "Server instellingen"
+          },
+          "children": [
             {
-                "type": "group",
-                "label": {
-                    "en": "Server settings",
-                    "nl": "Server instellingen"
-                },
-                "children": [
-                    {
-                        "id": "serverName",
-                        "type": "text",
-                        "label": {
-                            "en": "Servername",
-							"nl": "Server naam"
-                        },
-                        "value": ""
-                    },
-                    {
-                        "id": "hostname",
-                        "type": "text",
-                        "label": {
-                            "en": "Hostname",
-							"nl": "Hostnaam"
-						},
-                        "value": ""
-                    },
-                    {
-                        "id": "port",
-                        "type": "number",
-                        "label": {
-                            "en": "Port",
-							"nl": "Poort"
-                        },
-                        "value": 22,
-                        "attr": {
-                            "min": 1,
-                            "max": 65535
-                        }
-                    },
-                    {
-                        "id": "username",
-                        "type": "text",
-                        "label": {
-                            "en": "Username",
-							"nl": "Gebruikersnaam"
-						},
-                        "value": ""
-                    },
-                    {
-                        "id": "password",
-                        "type": "password",
-                        "label": {
-                            "en": "Password",
-							"nl": "Wachtwoord"
-						},
-                        "value": ""
-                    }
-                ]
+              "id": "serverName",
+              "type": "text",
+              "label": {
+                "en": "Servername",
+                "nl": "Server naam"
+              },
+              "value": ""
+            },
+            {
+              "id": "hostname",
+              "type": "text",
+              "label": {
+                "en": "Hostname",
+                "nl": "Hostnaam"
+              },
+              "value": ""
+            },
+            {
+              "id": "port",
+              "type": "number",
+              "label": {
+                "en": "Port",
+                "nl": "Poort"
+              },
+              "value": 22,
+              "attr": {
+                "min": 1,
+                "max": 65535
+              }
+            },
+            {
+              "id": "username",
+              "type": "text",
+              "label": {
+                "en": "Username",
+                "nl": "Gebruikersnaam"
+              },
+              "value": ""
+            },
+            {
+              "id": "password",
+              "type": "password",
+              "label": {
+                "en": "Password",
+                "nl": "Wachtwoord"
+              },
+              "value": ""
+            },
+            {
+              "id": "privateKey",
+              "type": "textarea",
+              "label": {
+                "en": "privateKey",
+                "nl": "private sleutel"
+              },
+              "value": ""
+            },
+            {
+              "id": "passphrase",
+              "type": "password",
+              "label": {
+                "en": "Passphrase",
+                "nl": "Wachtwoordzin"
+              },
+              "value": ""
             }
-         ]
-	}],
-	"flow": {
-		"actions": [{
-			"id": "command",
-			"title": {
-				"en": "SSH command",
-				"nl": "SSH commando"
-			},
-			"args": [{
-				"name": "device",
-				"type": "device",
-				"placeholder": {
-					"en": "Select SSH client",
-					"nl": "Selecteer SSH client"
-				}
-			}, {
-				"name": "command",
-				"type": "text",
-				"placeholder": {
-					"en": "Command to execute",
-					"nl": "Uit te voeren commando"
-				}
-			}]
-		}]
-	}
+          ]
+        }
+      ]
+    }
+  ],
+  "flow": {
+    "triggers": [
+      {
+        "id": "receiveResponse",
+        "title": {
+          "en": "SSH response received",
+          "nl": "SSH antwoord ontvangen"
+        },
+        "hint": {
+          "en": "After sending an SSH command, it is likely to receive a response. This trigger catches that response and contains tokens with that response. You could for example pass it through as a notification, or send it to the simple log app to store it",
+          "nl": "Na het versturen van een SSH commando is het waarschijnlijk dat je een antwoord krijgt. Deze trigger vangt dat antwoord af. Je kunt dat antwoord hiermee doorsturen als een notificatie of bijvoorbeeld naar de simple log app om dit antwoord op te slaan."
+        },
+        "tokens": [
+          {
+            "name": "command",
+            "type": "string",
+            "title": {
+              "en": "SSH command for which the response is received",
+              "nl": "SSH commando waar het antwoord voor ontvangen is"
+            },
+            "example": {
+              "en": "echo hello world",
+              "nl": "echo hallo wereld"
+            }
+          },
+          {
+            "name": "stdout",
+            "type": "string",
+            "title": {
+              "en": "Received response",
+              "nl": "Ontvangen antwoord"
+            },
+            "example": {
+              "en": "hello world",
+              "nl": "hallo wereld"
+            }
+          },
+          {
+            "name": "stderr",
+            "type": "string",
+            "title": {
+              "en": "Received error",
+              "nl": "Ontvangen foutmelding"
+            },
+            "example": {
+              "en": "could not echo, permission denied",
+              "nl": "onvoldoende rechten, fatale fout"
+            }
+          },
+          {
+            "name": "code",
+            "type": "number",
+            "title": {
+              "en": "Response code",
+              "nl": "Antwoord code"
+            },
+            "example": {
+              "en": "1",
+              "nl": "1"
+            }
+          },
+          {
+            "name": "signal",
+            "type": "string",
+            "title": {
+              "en": "Response signal",
+              "nl": "Antwoord signaal"
+            },
+            "example": {
+              "en": "",
+              "nl": ""
+            }
+          },
+          {
+            "name": "deviceName",
+            "type": "string",
+            "title": {
+              "en": "Device name",
+              "nl": "Apparaat naam"
+            },
+            "example": {
+              "en": "The device the response was received for",
+              "nl": "Het apparaat waar het antwoord voor ontvangen is"
+            }
+          }
+        ]
+      },
+      {
+        "id": "receiveError",
+        "title": {
+          "en": "SSH error received",
+          "nl": "SSH fout ontvangen"
+        },
+        "hint": {
+          "en": "When a connection can not be made for some reason, the error can be cought and debugged using this flow",
+          "nl": "Wanneer een verbinding niet gemaakt kan worden, de gebruikersnaam/wachtwoord onjuist zijn of er andere vergelijkbare fouten optreden worden deze hier afgevangen. Deze triggers kunnen daarom erg handig zijn bij het ontdekken waarom een ssh opdracht niet het gewenste resultaat oplevert"
+        },
+        "tokens": [
+          {
+            "name": "type",
+            "type": "string",
+            "title": {
+              "en": "Error type",
+              "nl": "Fout soort"
+            },
+            "example": {
+              "en": "One of: 'connection', 'command', 'generic'",
+              "nl": "Een van: 'connection', 'command', 'generic'"
+            }
+          },
+          {
+            "name": "error",
+            "type": "string",
+            "title": {
+              "en": "Complete error message",
+              "nl": "Complete foutmelding"
+            },
+            "example": {
+              "en": "The complete stringified error object",
+              "nl": "Het gehele fouten object als tekenreeks"
+            }
+          },
+          {
+            "name": "command",
+            "type": "string",
+            "title": {
+              "en": "SSH command for which the response is received",
+              "nl": "SSH commando waar het antwoord voor ontvangen is"
+            },
+            "example": {
+              "en": "echo hello world",
+              "nl": "echo hallo wereld"
+            }
+          },
+          {
+            "name": "deviceName",
+            "type": "string",
+            "title": {
+              "en": "Device name",
+              "nl": "Apparaat naam"
+            },
+            "example": {
+              "en": "The device the error was received for",
+              "nl": "Het apparaat waar de fout voor ontvangen is"
+            }
+          }
+        ]
+      }
+    ],
+    "actions": [
+      {
+        "id": "command",
+        "title": {
+          "en": "SSH command",
+          "nl": "SSH commando"
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "placeholder": {
+              "en": "Select SSH client",
+              "nl": "Selecteer SSH client"
+            }
+          },
+          {
+            "name": "command",
+            "type": "text",
+            "placeholder": {
+              "en": "Command to execute",
+              "nl": "Uit te voeren commando"
+            }
+          }
+        ]
+      }
+    ]
+  }
 }

@@ -1,0 +1,13 @@
+{
+  "engines": {
+    "node": ">=12.16.1"
+  },
+  "devDependencies": {
+    "eslint": "^7.7.0",
+    "eslint-config-athom": "^2.1.0",
+    "homey": "^2.6.1"
+  },
+  "dependencies": {
+    "node-ssh": "^11.0.0"
+  }
+}
